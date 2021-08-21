@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        @keyframes example {
+            0%   {
+                background-color: rgb(0, 0, 100);
+            }
+            20%  {
+                background-color: rgb(100, 100, 100);
+            }
+            40%  {
+                background-color: rgb(100, 0, 0);
+            }
+            60% {
+                background-color: rgb(0, 100, 0);
+            }
+            80% {
+                background-color: rgb(100, 65, 0);
+            }
+            100% {
+                background-color: rgb(0, 0, 100);
+            }
+        }
+        @keyframes textAnim {
+            0% {
+                transform: translate(-1%, 0);
+                
+            }
+            50% {
+                transform: translate(1%, 0);
+            }
+            100% {
+                transform: translate(-1%, 0);
+            }
+        }
+        body {
+            background-image: url("https://wallpaperaccess.com/full/1567666.png");
+            background-color: black;
+            animation-name: example;
+            background-attachment: fixed;
+            overflow:hidden;
+        }
+        p {
+            font-family: 'Trebuchet MS';
+            text-align:center;
+            color: rgb(255, 255, 255);
+        }
+        h1 {
+            text-align: center;
+            font-size: 100px;
+            color:rgb(255, 255, 255);
+            font-family: 'Trebuchet MS';
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-family: verdana;
+            transform: translate(875px, 0);
+        }
+        @keyframes goDown {
+            from {
+                margin-left: -100%;
+                transform:rotateX(0);
+            }
+            to {
+                margin-left: 0;
+                transform:rotateX(360);
+            }
+        }
+        #h {
+            animation-name: goDown;
+            animation-duration: 2s;
+            animation-iteration-count: 1;
+        }
+    </style>
+    <body>
+        <h1>
+            <p id = "h">
+                Heyan Chung
+            </p>
+        </h1>
+        <p>
+            Heyan Chung is a full stack developer (not really) who works at Google (not really) and has a PHD from MIT (not really). <br> He has recieved the Nobel Science Prize four times (not really) and is the chief white hacker of the USA (not really).
+            <br>
+            This is a collection of all of his projects, which don't really amount to much.
+        </p>
+
+        <button
+        id = "hello"
+        type="button"
+        onclick="doTheThing()"
+        >
+            wow look a button
+        </button>
+        <p id = "demo">
+
+        </p>
+</body>
+    <script>
+            let thing = 0;
+            function doTheThing() {
+                var buttonScript = "Hello there! Click the button again to close it.";
+                let el = document.getElementById('demo');
+                el.innerHTML = el.innerHTML == buttonScript ? "" : buttonScript;
+            }
+    </script>
+</html>
