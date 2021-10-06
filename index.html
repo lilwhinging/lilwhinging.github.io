@@ -1,33 +1,32 @@
-<!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="style.css">
+    <head>
+    </head>
     <body>
-        <h1>
-            <p id = "h">
-                hi
-            </p>
-        </h1>
-        <p>
-            hi hi?
-        </p>
+        <canvas id="output-canvas"></canvas>
+        <script src="processing.1.4.8.js"></script>
 
-        <button
-        id = "hello"
-        type="button"
-        onclick="doTheThing()"
-        >
-            wow look a button
-        </button>
-        <p id = "demo">
+<script>
+new Processing ( document.getElementById ( "output-canvas"), sketch );
 
-        </p>
-</body>
-    <script>
-            let thing = 0;
-            function doTheThing() {
-                var buttonScript = "Hello there! Click the button again to close it.";
-                let el = document.getElementById('demo');
-                el.innerHTML = el.innerHTML == buttonScript ? "" : buttonScript;
-            }
-    </script>
+function sketch ( pjs ) {
+    with ( pjs ) {
+
+        // red stroke
+        stroke ( 255, 0, 0 );
+
+        // thick border
+        strokeWeight ( 5 );
+
+        // yellow fill
+        fill ( 255, 240, 0 );
+
+        // draw a rectangle
+        rect ( 50, 50, 300, 200 );
+
+    }
+}
+
+} ) (); </script>
+
+    </body>
 </html>
