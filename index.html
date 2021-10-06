@@ -1,16 +1,26 @@
+<!DOCTYPE html>
 <html>
-    <head>
-    </head>
-    <body style = "margin:0">
-        <canvas id="output-canvas"></canvas>
-        <script src="processing.1.4.8.js"></script>
-
-<script>
-new Processing ( document.getElementById ( "output-canvas"), sketch );
-
-function sketch ( pjs ) {lil
-    with ( pjs ) {
-/**
+<head>
+    
+    <!--Imports Processing JS-->
+    <script src="https://cdn.rawgit.com/processing-js/processing-js/v1.4.8/processing.js"></script>
+    
+    <style>
+        body {margin: 0px;}
+        #canvas {
+            height: 600px;
+            width: 600px;
+            position: fixed;
+            overflow: none;
+        }
+    </style>
+</head>
+<body>
+    <script id="code" type="text/java">
+        void setup() {
+        	size(600, 600);
+        }
+        /**
  * falling
  * 
  * a game by littlewhinging
@@ -58,7 +68,7 @@ var Sign = (function(){
     fill(143, 72, 0);
     pushMatrix();
     translate(200, 184);
-    rotate(5);
+    rotate(5*0.0174533);
     rect(0, 0, 61, 30, 10);
     fill(84, 42, 0);
     pushMatrix();
@@ -273,7 +283,7 @@ Button.prototype.draw = function() {
     pushMatrix();
     translate(this.x, this.y);
     scale(this.w/this.w2);
-    rotate((this.w/this.w2)*360*5);
+    rotate((this.w/this.w2)*360*5*0.0174533);
     rect(0, 0, this.w, this.h);
     fill(0);
     textFont(createFont("Trebuchet MS"), 30);
@@ -330,16 +340,16 @@ Player.prototype.draw = function() {
     stroke(0);
     strokeWeight(5);
     if (this.eyeX > 1){
-        arc(this.x+30+this.eyeX, this.y+36, 20, 15, 0+this.eyeX*3, 180);
+        arc(this.x+30+this.eyeX, this.y+33, 20, 15, this.eyeX*3*0.0174533, 180*0.0174533);
     }
     else{
-        arc(this.x+30+this.eyeX, this.y+36, 20, 15, 0, 180+this.eyeX*3);
+        arc(this.x+30+this.eyeX, this.y+33, 20, 15, 0, (180+this.eyeX*3)*0.0174533);
     }
     fill(0, 200, 0, 255+this.eyeX*255/15);
     noStroke();
-    ellipse(this.x+this.eyeX, this.y+40+sin(frameCount*5)*5, 15, 25);
+    ellipse(this.x+this.eyeX, this.y+40+sin(frameCount*5*0.0174533)*5, 15, 25);
     fill(0, 200, 0, 255-this.eyeX*255/15);
-    ellipse(this.x+60+this.eyeX, this.y+40+sin(frameCount*5+90)*5, 15, 25);
+    ellipse(this.x+60+this.eyeX, this.y+40+sin(frameCount*5*0.0174533+90*0.0174533)*5, 15, 25);
 };
 Player.prototype.moveY = function(){
     this.prevY = this.y;
@@ -486,7 +496,7 @@ var AnimatedBackground = function(){
     for (var i = 0;i<360;i+=30){
         pushMatrix();
         translate(80, 80);
-        rotate(i+frameCount/3);
+        rotate((i+frameCount/3)*0.0174533);
         translate(-80, -73);
         triangle(80, 5, 65, 30, 95, 30);
         popMatrix();
@@ -496,7 +506,7 @@ var AnimatedBackground = function(){
     for (var i = 0;i<360;i+=30){
         pushMatrix();
         translate(80, 80);
-        rotate(i+frameCount/3);
+        rotate((i+frameCount/3)*0.0174533);
         translate(-80, -73);
         triangle(80, 5, 80, 30, 95, 30);
         popMatrix();
@@ -516,7 +526,7 @@ var AnimatedBackground2 = function(){
     for (var i = 0;i<360;i+=30){
         pushMatrix();
         translate(80, 80);
-        rotate(i+frameCount/3);
+        rotate((i+frameCount/3)*0.0174533);
         translate(-80, -73);
         triangle(80, 5, 65, 30, 95, 30);
         popMatrix();
@@ -526,7 +536,7 @@ var AnimatedBackground2 = function(){
     for (var i = 0;i<360;i+=30){
         pushMatrix();
         translate(80, 80);
-        rotate(i+frameCount/3);
+        rotate((i+frameCount/3)*0.0174533);
         translate(-80, -73);
         triangle(80, 5, 80, 30, 95, 30);
         popMatrix();
@@ -622,7 +632,7 @@ var logo = function(){
         textFont(createFont("Trebuchet MS"), 50);
         pushMatrix();
         translate(200, lwPos);
-        rotate((lwPos-200)*2);
+        rotate((lwPos-200)*2*0.0174533);
         scale((lwPos/400+0.4));
         text('DISSENSION', 0, 0);
         popMatrix();
@@ -645,6 +655,7 @@ var logo = function(){
             scene = "menu";
         }
         fill(0, transparencies1);
+        noStroke();
         rect(0, 0, 400, 400);
         popMatrix();
         
@@ -660,7 +671,7 @@ var uded = (function(){
         AnimatedBackground2();
         fill(0);
         textFont(createFont("Trebuchet MS Bold"), 100);
-        text("u died", 300, udedpos);
+        text("you died", 300, udedpos);
         textSize(50);
         text("with a score of "+floor(score), p2, 300);
         fill(0, transparencyded);
@@ -705,54 +716,9 @@ var how = (function(){
         AnimatedBackground2();
         fill(0);
         textFont(createFont("Trebuchet MS Bold"), 90);
-        text("hao tu pley", 300, udedpos);
+        text("how to play", 300, udedpos);
         textSize(30);
-        text("- move with arrow keys\n- don't be pushed to the top\n- press space to boost\n- collect coins\n- just go play already", p2, 300);
-        fill(0, transparencyded);
-        rect(0, 0, 600, 600);
-        if (!dedTriggered){
-            transparencyded = lerp(transparencyded, 0, 0.1);
-        }
-        else {
-            transparencyded = lerp(transparencyded, 256, 0.1);
-        }
-        if (transparencyded > 255){
-            udedpos = -300;
-            transparencyded = 255;
-            p2 = -300;
-            dedTriggered = false;
-            score = 0;
-            backBtn = new Button(300, 700, 200, 100, "back");
-            scene = "menu";
-        }
-        if (transparencyded < 1){
-            udedpos = lerp(udedpos, 100, 0.1);
-        }
-        if (udedpos > 99){
-            p2 = lerp(p2, 300, 0.1);
-        }
-        if (p2 > 299){
-            backBtn.y = lerp(backBtn.y, 500, 0.1);
-        }
-        backBtn.pack();
-        if (backBtn.triggered){
-            dedTriggered = true;
-        }
-    };
-})();
-var lead = (function(){
-    var udedpos = -300;
-    var transparencyded = 255;
-    var p2 = -300;
-    var dedTriggered = false;
-    var backBtn = new Button(300, 700, 200, 100, "back");
-    return function(){
-        AnimatedBackground2();
-        fill(0);
-        textFont(createFont("Trebuchet MS Bold"), 90);
-        text("leaderboard", 300, udedpos);
-        textSize(30);
-        text("1. Wolfie - 4214\n2. nathanielbane - 3765\n3. carter clements - 2654\n4. BrenErso - 1141\n5. unishalakuS - 820", p2, 300);
+        text("- move with arrow keys\n- don't be pushed to the top\n- press space to boost\n- collect coins", p2, 300);
         fill(0, transparencyded);
         rect(0, 0, 600, 600);
         if (!dedTriggered){
@@ -787,9 +753,8 @@ var lead = (function(){
 })();
 var menu = (function(){
     var myText = new FallingText(300, 100, "falling", 150);
-    var playBtn = new Button(-300, 250, 200, 100, "play");
-    var howBtn = new Button(900, 375, 200, 100, "how");
-    var leadBtn = new Button(-300, 500, 200, 100, "leaderboard");
+    var playBtn = new Button(-300, 300, 200, 100, "play");
+    var howBtn = new Button(900, 425, 200, 100, "how");
     var playTriggered = false;
     var howTriggered = false;
     var leadTriggered = false;
@@ -797,6 +762,7 @@ var menu = (function(){
     return function(){
         AnimatedBackground2();
         fill(0, transparencies2);
+        noStroke();
         rect(0, 0, 600, 600);
         transparencies2 = lerp(transparencies2, 0, 0.1);
         fill(0);
@@ -818,14 +784,9 @@ var menu = (function(){
         howBtn.update();
         howBtn.animate();
         
-        leadBtn.draw();
-        leadBtn.update();
-        leadBtn.animate();
-        
         if (myText.done){
             playBtn.x = lerp(playBtn.x, 300, 0.1);
             howBtn.x = lerp(howBtn.x, 300, 0.1);
-            leadBtn.x = lerp(leadBtn.x, 300, 0.1);
         }
         if (playBtn.triggered){
             playTriggered = true;
@@ -833,17 +794,11 @@ var menu = (function(){
         if (howBtn.triggered){
             howTriggered = true;
         }
-        if (leadBtn.triggered){
-            leadTriggered = true;
-        }
         if (playTriggered){
             transparencies[0] = lerp(transparencies[0], 255, 0.1);
         }
         if (howTriggered){
             transparencies[1] = lerp(transparencies[1], 255, 0.1);
-        }
-        if (leadTriggered){
-            transparencies[2] = lerp(transparencies[2], 255, 0.1);
         }
         noStroke();
         for (var i = 0;i<transparencies.length;i++){
@@ -852,9 +807,8 @@ var menu = (function(){
         }
         if (transparencies[0] > 254){
             myText = new FallingText(300, 100, "falling", 150);
-            playBtn = new Button(-300, 250, 200, 100, "play");
-            howBtn = new Button(900, 375, 200, 100, "how");
-            leadBtn = new Button(-300, 500, 200, 100, "leaderboard");
+            playBtn = new Button(-300, 300, 200, 100, "play");
+            howBtn = new Button(900, 425, 200, 100, "how");
             playTriggered = false;
             howTriggered = false;
             leadTriggered = false;
@@ -864,27 +818,14 @@ var menu = (function(){
         }
         if (transparencies[1] > 254){
             myText = new FallingText(300, 100, "falling", 150);
-            playBtn = new Button(-300, 250, 200, 100, "play");
-            howBtn = new Button(900, 375, 200, 100, "how");
-            leadBtn = new Button(-300, 500, 200, 100, "leaderboard");
+            playBtn = new Button(-300, 300, 200, 100, "play");
+            howBtn = new Button(900, 425, 200, 100, "how");
             playTriggered = false;
             howTriggered = false;
             leadTriggered = false;
             transparencies = [0, 0, 0];
             transparencies2 = 255;
             scene = "how";
-        }
-        if (transparencies[2] > 254){
-            myText = new FallingText(300, 100, "falling", 150);
-            playBtn = new Button(-300, 250, 200, 100, "play");
-            howBtn = new Button(900, 375, 200, 100, "how");
-            leadBtn = new Button(-300, 500, 200, 100, "leaderboard");
-            playTriggered = false;
-            howTriggered = false;
-            leadTriggered = false;
-            transparencies = [0, 0, 0];
-            transparencies2 = 255;
-            scene = "lead";
         }
     };
 })();
@@ -905,9 +846,6 @@ var main = function() {
         case "how":
             how();
         break;
-        case "lead":
-            lead();
-        break;
     }
     clicked = false;
 };
@@ -924,14 +862,15 @@ keyPressed = function(){
 keyReleased = function(){
     keys[keyCode] = false;
 };
+
 mouseClicked = function(){
     clicked = true;
 };
 //}
-
-    }
-}
-</script>
-
-    </body>
+    </script>
+    
+    <!--This is what outputs-->
+    <canvas id="canvas" data-processing-sources="#code"></canvas>
+    
+</body>
 </html>
