@@ -1,874 +1,288 @@
 <!DOCTYPE html>
-<html> 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/jpg" href="shc.jpg"/>
- <head>
-    <title>Falling - Game</title> 
-</head>
- <body>
-	<!--This draws the Canvas on the webpage -->
-      <canvas id="mycanvas"></canvas> 
- </body>
- 
- <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
- 
- <script>
-    var sketchProc = function(processingInstance) {
-     with (processingInstance) {
-        /**
- * falling
- * 
- * a game by littlewhinging
- * 
- * 992 lines of confused code ^-^
- * 
- * Spin-off proof is not required for the leaderboard, please be honest - and only post in the thread for the leaderboard scores.
- * 
- * Subscribe? It only takes a few seconds, it's free, and you can always unsubscribe.
- * https://www.khanacademy.org/computer-programming/littlewhingings-sub-page/6637078393733120
-*/
+<!-- Copyright 2021 by Heyan Chung. CC-BY-SA license.-->
+<html lang = "en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:wght@500&family=Oxygen&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans:700,500,400|Material+Icons|Roboto" rel="stylesheet">  
+        <link href = "style.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/jpg" href="shc.jpg"/>
+        <meta charset="utf-8">
+        <title>Dr. Sung Chung's Webpage</title>
+    </head>
+    <body>
+        <nav>
+            <img src = "shc.jpg" id ="favicon" alt = "Image of Sung Hoon Chung" onClick = "javascript: changePage(0);">
+            <a class = "b" href = "javascript: changePage(5);"><i class = "material-icons" id = "last">link</i></a>
+            <a class = "b" href = "javascript: changePage(4);"><i class = "material-icons">biotech</i></a>
+            <a class = "b" href = "javascript: changePage(3);"><i class = "material-icons">school</i></a>
+            <a class = "b" href = "javascript: changePage(2);"><i class = "material-icons">description</i></a>
+            <a class = "b" href = "javascript: changePage(1);"><i class = "material-icons">science</i></a>
+            <a class = "b" href = "javascript: changePage(0);"><i class = "material-icons">home</i></a>
+        </nav>
+        <div class = "page">
+            <br>
+            <br>
+            <br>
+            <img src = "shc.jpg" class = "portrait" alt = "Image of Sung Hoon Chung">
+            <div id = "head">
+                <h1>Sung Hoon Chung, Ph.D.</h1>
+                <p id = "asp">Assistant Professor</p>
+            </div>
+            <p>Department of Systems Science and Industrial Engineering<br>Binghamton University, the State University of New York<br></p>
+            <p class = "h2"><strong>Contact</strong></p>
+            <p>P.O. Box 6000<br>Binghamton, NY 13902-6000<br>Tel: +1-607-777-5933<br>Fax: +1-607-777-4094<br>Email: schung@binghamton.edu</p>
+            <p class = "h2"><strong>Education</strong></p>
+            <p>Ph.D., 2011, <a href = "http://www.psu.edu">The Pennsylvania State University</a><br>M.S., 2001, <a href="https://www.yonsei.ac.kr/en_sc/index.jsp"> Yonsei University</a><br>B.S., 1999, <a href="https://www.yonsei.ac.kr/en_sc/index.jsp"> Yonsei University</a></p>
+            <br><br>
+            <p class = "updated">Last Updated September 2021<br>Website created by Heyan Chung</p>
+        </div>
 
-
-
-
-
-/** Setup **/
-//{
-//jshint ignore: start
-size(600, 600, 1);
-var scene = "logo";
-var lwPos = -100;
-var finalePos = -600;
-var lwPos2 = 500;
-var clicked = false;
-var transparencies1 = 0;
-var transparencies2 = 255;
-var transparencies3 = 0;
-var score = 0;
-function s (start, dest, amt){
-    return start + ((dest-start)/amt);
-}
-//}
-
-/** Graphics **/
-//{
-var Sign = (function(){
-    background(0, 0);
-    pushMatrix();
-    translate(-160, -161);
-    noStroke();
-    rectMode(CENTER);
-    fill(84, 42, 0);
-    rect(200, 200, 10, 70, 10, 10, 0, 0);
-    fill(143, 72, 0);
-    pushMatrix();
-    translate(200, 184);
-    rotate(5*0.0174533);
-    rect(0, 0, 61, 30, 10);
-    fill(84, 42, 0);
-    pushMatrix();
-    translate(0, 3);
-    rect(0, 3, 30, 10);
-    triangle(-20, 3, -13, -6, -13, 11);
-    popMatrix();
-    textAlign(CENTER, CENTER);
-    textFont(createFont("Montserrat"), 15);
-    text("start", 2, -7);
-    popMatrix();
-    popMatrix();
-    rectMode(CORNER);
-    return get(0, 0, 76, 76);
-})();
-var BackgroundBase = (function(){
-    background(5, 234, 255);
-    
-    //gradient
-    for (var i = 0;i<300;i++){
-        fill(255, 255, 255, i*6);
-        noStroke();
-        rect(0, i*10, 600, 10);
-    }
-    
-    //sun
-    fill(255, 255, 97);
-    noStroke();
-    ellipse(80, 80, 90, 90);
-    fill(255, 244, 33);
-    arc(80, 80, 90, 90, -90, 90);
-    
-    fill(107, 230, 0);
-    triangle(600, 300, 624, 600, 0, 600);
-    
-    fill(91, 196, 0);
-    triangle(0, 300, 744, 600, 0, 600);
-    
-    fill(75, 166, 0);
-    beginShape();
-        vertex(600, 600);
-        bezierVertex(190, 135, 278, 612, 0, 347);
-        vertex(0, 400);
-        vertex(0, 600);
-    endShape(CLOSE);
-
-
-    return get(0, 0, 600, 400);
-})();
-var BackgroundBase2 = (function(){
-    background(5, 234, 255);
-
-    //gradient
-    for (var i = 0;i<300;i++){
-        fill(255, 255, 255, i*6);
-        noStroke();
-        rect(0, i*10, 600, 10);
-    }
-    
-    //sun
-    fill(255, 255, 97);
-    noStroke();
-    ellipse(80, 80, 90, 90);
-    fill(255, 244, 33);
-    arc(80, 80, 90, 90, -90, 90);
-    
-    fill(107, 230, 0);
-    triangle(600, 300, 624, 600, 0, 600);
-    
-    fill(91, 196, 0);
-    triangle(0, 300, 744, 600, 0, 600);
-    
-    fill(75, 166, 0);
-    beginShape();
-        vertex(600, 600);
-        bezierVertex(190, 135, 278, 612, 0, 347);
-        vertex(0, 400);
-        vertex(0, 600);
-    endShape(CLOSE);
-
-    return get();
-})();
-function cloud(x, y, s){
-    pushMatrix();
-    translate(x, y);
-    scale(s);
-    fill(255, 255, 255);
-    ellipse(246, 104, 40, 40);
-    ellipse(298, 104, 40, 40);
-    ellipse(271, 99, 50, 50);
-    rect(242, 99, 56, 25);
-    
-    popMatrix();
-}
-var clouds = [
-    {
-        x: -55,
-        y: 51,
-        s: 1.5,
-        speed: random(1, 2)
-    },
-    {
-        x: 0,
-        y: 0,
-        s: 1,
-        speed: random(1, 2)
-    },
-    {
-        x: 154,
-        y: -16,
-        s: 1,
-        speed: random(1, 2)
-    },
-    {
-        x: 416,
-        y: -16,
-        s: 1,
-        speed: random(1, 2)
-    },
-    {
-        x: 492,
-        y: 117,
-        s: 0.4,
-        speed: random(1, 2)
-    },
-    {
-        x: 692,
-        y: 52,
-        s: 1.5,
-        speed: random(1, 2)
-    },
-    {
-        x: 612,
-        y: -12,
-        s: 1.3,
-        speed: random(1, 2)
-    },
-];
-//}
-
-/** Animation **/
-//{
-/** Falling Text constructor **/
-var FallingText = function(startingY,endingY,msg,x){
-    this.msg = msg;
-    this.endingY = endingY;
-    this.txtArray = [];
-    this.x = x;
-    
-    for (var i = 0;i<this.msg.length;i++){
-        this.txtArray.push(startingY);
-        this.spacing = this.x;
-    }
-};
-
-/** Draw method**/
-FallingText.prototype.draw = function() {
-    var spacing = this.x;
-    for (var i = 0;i<this.msg.length;i++) {
-        fill(0, 455-this.txtArray[i]*2);
-        pushMatrix();
-        translate(spacing, this.txtArray[i]);
-        scale(this.txtArray[i]/this.endingY);
-        text(this.msg[i], 0, 0);
-        popMatrix();
-        spacing += textWidth(this.msg[i]);
-    }
-};
-
-/** Animate **/
-FallingText.prototype.animate = function() {
-    for (var i = 0;i<this.msg.length;i++) {
-        if (i === 0){
-            this.txtArray[0] = lerp(this.txtArray[0], this.endingY, 0.1);
-        }
-        else if (this.txtArray[i-1]<this.endingY+60){
-            this.txtArray[i] = lerp(this.txtArray[i], this.endingY, 0.1);
-        }
-    }
-    this.done = this.txtArray[this.txtArray.length-1] < this.endingY + 1;
-};
-//}
-
-/** User Interface **/
-//{
-var Button = function(x, y, w, h, msg){
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.w2 = w;
-    this.h = h;
-    this.msg = msg;
-};
-Button.prototype.update = function(){
-    this.inside = mouseX > this.x - this.w/2 && mouseX < this.x + this.w/2 && mouseY > this.y - this.h/2 && mouseY < this.y+this.h/2;
-    this.triggered = this.inside && clicked;
-};
-Button.prototype.animate = function(){
-    if (this.inside){
-        this.w = lerp(this.w, this.w2*1.2, 0.1);
-    }
-    else {
-        this.w = lerp(this.w, this.w2, 0.1);
-    }
-};
-Button.prototype.draw = function() {
-    rectMode(CENTER);
-    textAlign(CENTER, CENTER);
-    noFill();
-    stroke(0);
-    strokeWeight(this.w/40);
-    pushMatrix();
-    translate(this.x, this.y);
-    scale(this.w/this.w2);
-    rotate((this.w/this.w2)*360*5*0.0174533);
-    rect(0, 0, this.w, this.h);
-    fill(0);
-    textFont(createFont("Montserrat"), 30);
-    text(this.msg, 0, 0);
-    popMatrix();
-    rectMode(CORNER);
-};
-Button.prototype.pack = function(){
-    this.update();
-    this.draw();
-    this.animate();
-};
-var keys = [];
-//}
-
-/** Game Logic **/
-//{
-var rrCol = function(obj1, obj2){
-return obj1.x + obj1.w > obj2.x && obj1.x < obj2.x + obj2.w && obj1.y + obj1.h > obj2.y && obj1.y < obj2.y + obj2.h;
-};
-
-var Player = function(){
-    this.x = 300;
-    this.y = 20;
-    this.yVel = 0;
-    this.gravity = 0.3;
-    this.timer = 0;
-    this.eyeX = 0;
-    this.w = 60;
-    this.h = 60;
-    this.timer2 = 0;
-    this.canJump = false;
-    this.score = 0;
-};
-Player.prototype.draw = function() {
-    if (keys[LEFT]){
-        this.eyeX = lerp(this.eyeX, -30, 0.1);
-    }
-    else if (keys[RIGHT]){
-        this.eyeX = lerp(this.eyeX, 30, 0.1);
-    }
-    else {
-        this.eyeX = lerp(this.eyeX, 0, 0.1);
-    }
-    
-    noStroke();
-    fill(0, 255, 0);
-    rect(this.x, this.y, this.w, this.h, 10);
-    fill(0, 255+this.eyeX*255/15);
-    ellipse(this.x+15+this.eyeX, this.y+20, 10, 10);
-    fill(0, 255-this.eyeX*255/15);
-    ellipse(this.x+45+this.eyeX, this.y+20, 10, 10);
-    noFill();
-    stroke(0);
-    strokeWeight(5);
-    if (this.eyeX > 1){
-        arc(this.x+30+this.eyeX, this.y+33, 20, 15, this.eyeX*3*0.0174533, 180*0.0174533);
-    }
-    else{
-        arc(this.x+30+this.eyeX, this.y+33, 20, 15, 0, (180+this.eyeX*3)*0.0174533);
-    }
-    fill(0, 200, 0, 255+this.eyeX*255/15);
-    noStroke();
-    ellipse(this.x+this.eyeX, this.y+40+sin(frameCount*5*0.0174533)*5, 15, 25);
-    fill(0, 200, 0, 255-this.eyeX*255/15);
-    ellipse(this.x+60+this.eyeX, this.y+40+sin(frameCount*5*0.0174533+90*0.0174533)*5, 15, 25);
-};
-Player.prototype.moveY = function(){
-    this.prevY = this.y;
-    this.y+=this.yVel;
-    this.yVel+=this.gravity;
-    if (keys[UP] && this.canJump){
-        this.yVel = -11;
-        this.canJump = false;
-    }
-    this.y = constrain(this.y, -600, 540);
-};
-Player.prototype.moveX = function(){
-    if (keys[32]){
-        this.timer--;
-        if (this.timer > 0){
-            this.xVel = 10;
-        }
-        else {
-            this.xVel = 5;        
-        }
-        this.timer2 = 0;
-    }
-    else {
-        this.timer2++;
-        this.xVel = 5;
-        this.timer+=0.5;
-    }
-    this.timer = constrain(this.timer, 0, 100);
-    this.prevX = this.x;
-    if (keys[LEFT]){
-        this.x -= this.xVel;
-    }
-    if (keys[RIGHT]){
-        this.x += this.xVel;
-    }
-    this.x = constrain(this.x, 0, 540);
-};
-
-var blockVel = 0;
-var Block = function(x, y, w, h, isGrass){
-    this.x = x;
-    this.y = y;
-    this.yVel = 0;
-    this.yPos = y;
-    this.w = w;
-    this.h = h;
-    this.grass = isGrass;
-    this.ellipses = [];
-    for (var i = this.x;i<this.x+this.w;i+=random(10, 20)){
-        this.ellipses.push([i, this.y]);
-    }
-};
-Block.prototype.draw = function() {
-    if (this.grass){
-        fill(52, 143, 0);
-        rect(this.x, this.y, this.w, this.h);
-        for (var i = this.x;i<600;i+=10){
-            triangle(i, this.y+1, i+5, this.y-8, i+10, this.y+1);
-        }
-    }
-    else {
-        fill(153, 77, 0);
-        noStroke();
-        rect(this.x, this.y, this.w, this.h);
-        fill(84, 39, 0);
-        for (var i = 0;i<this.ellipses.length;i++){
-            ellipse(this.ellipses[i][0], this.ellipses[i][1], 10, 10);
-        }
-    }
-};
-Block.prototype.collideX = function(obj1){
-    if (rrCol(this, obj1)){
-        if(obj1.prevX < this.x) {
-            obj1.x = this.x - obj1.w;
-        }
-        else if (obj1.x>this.x){
-            obj1.x = this.x + this.w;
-        }
-    }
-};
-Block.prototype.collideY = function(obj1){
-    this.y-=blockVel;
-    
-    if (rrCol(this,obj1)){
-        obj1.canJump = true;
+        <div class = "page">
+            <h2>Research Interests</h2>
+            <p class = "maintext">My research focuses on mathematical optimization under uncertainty (robust optimization, data-driven optimization) for complex, large-scale problems (numerical optimization, large-scale optimization) where multiple agents compete against – and sometimes coordinate with – one another for limited resources over time (computational game theory, evolutionary game theory, dynamic optimization). Research domains include urban transporation/logistics, smart cities, supply chain management, hazards and disaster management, and healthcare operations management.
+            </p>
+            <p class = "h2">
+                Drone-truck Combined Operations
+            </p>
+            <br><br>
+            <p class = "h3">Arc Routing Problems for Combined Drone-truck Fleets</p>
+            <p class = "maintext">This research contributes to national prosperity by advancing planning methods for combined drone/truck fleets to serve critical societal needs, such as energy transmission infrastructure monitoring, urban police patrolling, rural and suburban mail delivery, roadway pavement inspection, and traffic monitoring. Despite the significant opportunities offered by drones for remote operations, their limited flying time and small battery capacity hamper large-scale operations. Coordination between drones and roadway-dependent motor vehicles, such as trucks, can help resolve these issues by providing batteries and payload required for continued drone services. This project will provide a novel approach to cover large service areas using combined drone/truck fleets. This award highlights the societal applications characterized by combined ‘arc’ routing, for which existing routing methods 
+                cannot provide adequate decision-making tools. In particular, this project will validate the methods developed through a case study involving surveillance of electric power transmission lines, the backbone of the nation’s energy infrastructure. This project will train the future workforce in computational operations research and develop open-source software packages to support the further use of unmanned vehicles.<br>The project will advance our understanding of arc routing problems in combined drone/truck fleets by developing computational optimization models and algorithms. The combined drone/truck arc routing problem is fundamentally different and significantly more challenging than traditional arc routing problems because drones can fly directly from one point to another point in the network without following ground arcs. In addition, a drone may serve only part of an arc due to its limited capacity and footprint, or potentially multiple distinct routes covering the entire arc. The optimal routing of mobile hubs served by trucks must also be incorporated into this already challenging problem. Furthermore, a drone may 
+                launch from one truck and return to another truck if beneficial; therefore, synchronization between drones and trucks plays a significant role. This project will provide a novel mixed-integer linear programming formulation and adaptive heuristics based on decomposition, dynamic programming, partitioning, large neighborhood search, and machine learning for efficient operations of the combined fleets. The models and algorithms will be validated with actual data from power transmission line monitoring.</p>
+            <p class = "h3">Types of mixed fleet problems</p>
+            <img src = "prob_classification.png" class = "pcp">
+            <p class = "h3">Examples</p>
+            <img src = "combined_ex.png" class = "pcp">
+            <p class = "h3">Pseudo Node Insertion Method</p>
+            <p class = "maintext">The advantage of a drone-truck mixed fleet operations in last-mile logistics can be summarized in two folds: 1) enabling faster pick-up/delivery of items and 2) expanding operation areas beyond the range that could be achieved by using only one type of vehicle. The drone-truck combined operation (DTCO) solutions are based on truck routes and locations, usually customer nodes, where drones depart from and return to trucks. Since synchronous rendezvous of both vehicles can be very rare, these solutions may contain waste time caused by waiting of one vehicle for the other. In this research, a pseudo node insertion method is proposed to make DTCO more efficient by resolving the drone-truck asynchronization issue. Pseudo nodes are created at the point where a drone and a truck can meet simultaneously. We present a detailed method to calculate the location of the pseudo node, and provide a detailed analysis for the travel completion time saving conditions. Furthermore, we explore a variety of scenarios to enhance the efficiency of DTCO by way of inserting pseudo nodes. An algorithm for the pseudo node insertion method is provided, and numerical examples are presented to discuss efficacy and efficiency of our proposed approach.</p>
+            <img src = "pseudo_node.png" class = "pcp">
+            <p class = "maintext">In the above figure, the DTCO solution is shown in (a), which can be improved by way of inserting pseudo nodes as shown in (b). The travel completion time is analyzed in (c) for both problems, where the red boxes show the waiting time. It is clear that the travel completion time is effectively reduced if the pseudo nodes are used.</p>
+            <p class = "h3">Survey of Optimization Methods for Drone-truck Combined Operations</p>
+            <p class = "maintext">We survey the state-of-the-art optimization approaches in the civil application of drone operations (DO) and drone-truck combined operations (DTCO) including construction/infrastructure, agriculture, transportation/logistics, security/disaster management, entertainment/media, etc. In particular,
+                we review ongoing research on various optimization issues related to DO and DTCO including mathematical models, solution methods, synchronization between a drone and a truck, and barriers in implementing DO and DTCO. First, we introduce DO and DTCO and their applications, 
+                and explore some previous works including survey papers. In addition, we survey the state of the art of DO and DTCO studies and discuss the research gaps in the literature. Furthermore, the detailed review of DTCO models and solution methods are reviewed. Finally, future research directions are discussed. All the reviewed papers are summarized in an Excel file, which can be downloaded <a href="https://github.com/ppolly/DTCO/raw/master/References.xlsx" download>here.</a></p>
+            <p class = "h2">
+                Research Grants
+            </p>
+            <ul class = "ml">
+                <li class = "pub">(Lead-PI, 54%) Collaborative Research: <a href = "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2032460&HistoricalAwards=false">Arc Routing Problems in Combined Drone/Truck Fleets</a>, funded by National Science Foundation, 7/2021-6/2024</li>
+                <li class = "pub">(PI, 100%) Using drones to disinfect urban streets and protect the most vulnerable population from the spread of COVID-19, funded by SUNY RF, 4/2020-12/2020</li>
+                <li class = "pub">(PI, 100%) Systematic and Integrated Framework for Advancing the Management of Dynamic, Complex, and Interdependent Systems, funded by Material Handling Institute, 2/2018-12/2019</li>
+                <li class = "pub">(PI, 50%) Investigating the Potential of Dynamic Wireless Charging Techniques for Continuous Electric Forklift Operations, funded by Toyota Material Handling North America University Research Program, 1/2017-1/2018</li>
+                <li class = "pub">(Co-PI, 50%) Studying Lift Truck Driver Behavior and Warehouse Congestion Using Informatics and Analytics Methods, funded by Toyota Material Handling North America University Research Program, 1/2017-1/2018</li>
+                <li class = "pub">(Co-PI, 50%) Re-Engineering of Operations at Laufer Group International, funded by Laufer Group International, 10/2016-09/2017</li>
+                <li class = "pub">(PI, 100%) Adaptive Vehicle Routing for Evacuation under Uncertainty, funded by U.S. Department of Transportation through University Tranportation Research Center, 09/2016-12/2017</li>
+                <li class = "pub">(PI, 100%) <a href = "http://www.utrc2.org/research/projects/disaster-relief-vehicle-routing">Disaster Relief Routing under Uncertainty</a>, funded by U.S. Department of Transportation through University Tranportation Research Center, 05/2015-12/2016</li>
+                <li class = "pub">(Co-PI, 50%) Warehouse Modeling, Operations Management, and Analytics, funded by Bennett Distribution Services, 06/2015-05/2018</li>
+                <li class = "pub">(Co-PI, 50%) Research in RMA Process Setup, funded by Google, 11/2014-12/2015</li>
+            </ul>
+            <p class = "updated">Last Updated September 2021</p>
+        </div>
+        <div class = "page">
+            <h2>Publications</h2>
+            <ul class = "ml">
+                <li class = "pub">Li, Y. and S. H. Chung, 2020, "Ride-Sharing under Travel Time Uncertainty: Robust Optimization and Clustering Approaches," Computers & Industrial Engineering, in press.</li>
+                <li class = "pub">Hathikal, S., S. H. Chung, and M. Karczewski, 2020, "Prediction of Ocean Import Shipment Lead Time Using Machine Learning Methods," SN Applied Sciences, in press.</li>
+                <li class = "pub">Jeon, H., S. H. Chung, and K. Park, 2020, "A Nonparametric Approach to Modeling Dependence among Production Parameters for Energy Cost Estimation," The International Journal of Advanced Manufacturing Technology, in press</li>
+                <li class = "pub">Chung, S. H., B. Sah, and J. Lee, 2020, "Pseudo Node Insertion Method for Syncronization in Drone-Truck Combined Operations" Transportation Research Part C: Emerging Technologies, under review.</li>
+                <li class = "pub">Chung, S. H., B. Sah, and J. Lee, 2020, "Pseudo Node Insertion Method for Syncronization in Drone-Truck Combined Operations" Transportation Research Part C: Emerging Technologies, under review.</li>
+                <li class = "pub"><a href = "https://www.sciencedirect.com/science/article/abs/pii/S0360835220302102">Chung, S. H., B. Sah, and J. Lee, 2020, "Optimization for Drone and Drone-truck Combined Operations: A Review of the State-of-the-Art and Future Directions," Computers & Operations Research, in press.</a></li>   
+                <li class = "pub"><a href = "https://link.springer.com/article/10.1007/s42452-020-2076-x">Shetty, N., B. Sah, and S. H. Chung, 2020, "Route Optimization For Warehouse Order Picking Operations via Vehicle Routing and Simulation," SN Applied Sciences, 2(2), 311.</a></li>
+                <li class = "pub"><a href = "https://doi.org/10.1007/s11067-020-09493-7">Chung, S. H., R. D. Weaver, and H. Jeon, 2020, "Sustainable Management of Remanufacturing in Dynamic Closed-loop Supply Chains," Networks and Spatial Economics, 1-29.</a></li>
+                <li class = "pub"><a href = "https://doi.org/10.1016/j.cie.2019.106129">Lee, I. G., S. H. Chung, S. W. Yoon, 2020, "Two-stage Storage Assignment to Minimize Travel Time and Congestion for Warehouse Order Picking Operations," Computers & Industrial Engineering, 139, 106–129.</a></li>
+                <li class = "pub"><a href = "">Halawa, F. H. Daoud, I. G. Lee, Y. Li, S. W. Yoon, and S. H. Chung, 2019, "Introduction of a Real-Time Location System to Enhance Warehouse Safety and Operational Efficiency," International Journal of Production Economics, 224, 107541.</a></li>
+                <li class = "pub"><a href = "https://doi.org/10.1016/j.cie.2019.04.010">Serhan, D., S. W. Yoon, S. H. Chung, 2019, "Dynamic Reconfiguration of Terminal Airspace During Convective Weather: Robust Optimization and CVaR Approaches," Computers & Industrial Engineering, 132, 333–347.</a></li>
+                <li class = "pub"><a href = "https://doi.org/10.1007/s00170-019-03429-3">Calvi, K., S. H. Chung, M. Economou, R. Kulkarni, and R. Havens, 2019, "A Simulation Study Integrated with Activity-based Costing for an Electronic Device Refurbishing System," The International Journal of Advanced Manufacturing Technology, 103, 127–140. </a></li>
+                <li class = "pub"><a href = "https://doi.org/10.1080/24725854.2018.1450540">Li, Y., S. H. Chung, 2019, "Disaster Relief Routing under Uncertainty: A Robust Optimization Approach," IISE Transactions, 51(8), 869–886. </a> <b>This article was featured in <a href = "javascript: changePage(4);">IISE magazine.</a></b></li>
+                <li class = "pub">Hailemariam, D. A., X. Shan S. H. Chung, M. T. Khasawneh, W. Lukesh, A. Park, and A. Rose, 2018, "Developing an Appropriate Staff Mix for Anticoagulation Clinics: Functional Job Analysis Approach," Journal of Industrial Engineering International, 15(1), 103–118.</li>
+                <li class = "pub"><a href = "http://www.sciencedirect.com/science/article/pii/S0925527316300913">Chung, S. H. and C. Kwon, 2016, "Integrated Pharmaceutical Supply Chain Management: Dynamics and Oligopolistic Competition Perspectives," International Journal of Production Economics, 179, 117–129.</a></li>
+                <li class = "pub">Al-Mashraie, M. and S. H. Chung, 2016, "Customer Churn Prediction in Telecommunication Industry: A Case Study," Proceedings of the 2016 Industrial and Systems Engineering Research Conference, Anaheim, CA, May. 21-24.</li>
+                <li class = "pub">Kohtz, S., S. H. Chung, Y. Li, and N. Sawant, 2016, "Evacuation Planning for Urban Areas Using Public Transit Systems," Proceedings of the 2016 Industrial and Systems Engineering Research Conference, Anaheim, CA, May. 21-24.</li>
+                <li class = "pub"><a href = "http://www.sciencedirect.com/science/article/pii/S0377221714008509">Chung, S. H. and C. Kwon, 2015, "Multi-Period Planning for Electric-Car Charging Station Locations: A Case of Korean Expressways," European Journal of Operational Research, 242(2), 677–687.</a></li>
+                <li class = "pub"><a href = "http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6522099">Chung, S. H., T. L. Friesz, and R. D. Weaver, 2014, "Dynamic Sustainability Games for Renewable Resources - A Computational Approach," IEEE Transactions on Computers, Special Issue on Computational Sustainability, 63(1), 155–166.</a></li>
+                <li class = "pub"><a href = "http://www.sciencedirect.com/science/article/pii/S0377221713004359">Chung, S. H., R. D. Weaver, and T. L. Friesz, 2013, "Strategic Response to Pollution Taxes in Supply Chain Networks: Dynamic, Spatial, and Organizational Dimensions," European Journal of Operational Research, 231(2), 314–327.</a></li>
+                <li class = "pub"><a href = "http://www.sciencedirect.com/science/article/pii/S0925527312000199">Chung, S. H., T. L. Friesz, and R. D. Weaver, 2012, "Oligopolies in Pollution Permit Markets: A Dynamic Game Approach," International Journal of Production Economics, 140(1), 48–56.</a></li>
+            </ul>
+            <p class = "updated">Last Updated October 2021</p>
+        </div>
+        <div class = "page">
+            <h2>Teaching</h2>
+            <p class = "h2">Current Courses</p>
+            <p>- ISE 421, Modeling and Simulation, Fall 2021<br>- SSIE 660, Stochastic Systems, Fall 2021</p>
+            <p class = "h2">Courses Taught</p>
+            <p>- Simulation Modeling and Analysis<br>- Applied Probability and Statistics<br>- Applied Stochastic Processes<br>- Computational Sustainability<br>- Linear Programming<br>- Operations Research: Deterministic Methods<br>- Statistical Methods in IE</p>
+            <br>
+            <p class = "updated">Last Updated June 2021</p>
+        </div>
+        <div class = "page">
+            <br><br>
+            <h1>Computational Operations Research & Engineering (CORE) Laboratory</h1>
+            <p class = "maintext">The CORE laboratory in the department of Systems Science and Industrial Engineering at Binghamton University, the State University of New York, is located in EB J0.</p>
+            <br>
+            <h1>Research Domains</h1>
+            <p>- Urban transportation/logistics<br>- Smart cities<br>- Supply chain management<br>- Hazards and disaster management<br>- Healthcare operations management</p>
+            <br>
+            <h1>Quantative and Analytical Tools</h1>
+            <p>- Mathematical optimization<br>- Simulation<br>- Statistical Learning<br>- Game Theory<br>- Decision Analysis</p>
+            <br><h1>People</h1>
+            <p><strong>Current Members</strong></p>
+            <p>- Dr. Sung Hoon Chung, Principal Investigator<br>- Antoine Stewart, Ph.D. Student<br>- Emad Alenany, Ph.D. Student<br>- Joseph Chery, Ph.D. Student<br>- Shadi Al-B'Ool, Ph.D. Student</p>
+            <br>
+            <p><strong>Alumni</strong></p>
+            <br>
+            <p>Ph.D.</p>
+            <p>- Mohammed Al-Mashraie, Ph.D., 2021, Now Senior Innovation Specialist, Albany Medical Center<br>- Bhawesh Sah, Ph.D., 2019, Now Visiting Assistant Professor at Northeastern University<br>- Yinglei Li, Ph.D., 2018, Now Senior Data Scientist at Breakthrough Fuel LLC</p>
+            <br>
+            <p>MS</p>
+            <p>- Runzhuo Chi, MS, 2020<br>- Sachin Vohra, MS, 2020<br>- Ryan Maloney, MS, 2020<br>- Yingzheng Liu, MS, 2019<br>- Saraswathi Hathikal, MS, 2018<br>- Ingyu Lee, MS, 2017<br>- Abel Portorreal, BS, 2017<br>- Yue Zhang, MS, 2017
+                <br>- Vinay Ghandi, MS, 2017
+                <br>- Namrata Shetty, MS, 2017
+                <br>- Harikrishnan Rajkimar, MS, 2016
+                <br>- Sandesh Bharre, MS, 2016
+                <br>- Sara Kohtz, BS, 2015; MS, 2016
+                <br>- Kevin Calvi, MS, 2015</p>
+            <br>
+            <h1>News</h1>
+            <p class = "maintext">	- Dr. Chung receives a research grant from National Science Foundation, June 2021
+                <br><a href = "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2032460&HistoricalAwards=false">[Collaborative Research: Arc Routing Problems in Combined Drone/Truck Fleets]</a>
+                <br><br>- Joseph Chery, a Ph.D. student, joins the CORE lab, Jan, 2021
+                <br><br>- Shadi Al-B'Ool, a Ph.D. student, joins the CORE lab, Nov 2020
+                <br><br>- Emad Alenany, a Ph.D. student, joins the CORE lab, Oct, 2020
+                <br><br>- Antoine Stewart, a Ph.D. student, joins the CORE lab, April, 2020
+                <br><br>- Dr. Chung receives a research grant from SUNY RF, April, 2020
+                <br><br>- Two master students, Sachin Vohra and Ryan Maloney, join the CORE lab, February, 2020
+                <br><br>- Runzhuo Chi, a master student, joins the CORE lab, December, 2019
+                <br><br>- Linh Nguyen, an undergraduate student, joins the CORE lab, September, 2019
+                <br><br>- Dr. Sah will join Northeastern University as a Visiting Assitant Professor, Congratulations, July 2019
+                <br><br>- Bhawesh Sah successfully defended his Ph.D. dissertation, May 2019
+                <br><br>- Dr. Chung receives an Individual Development Award, February 2019
+                <br><br>- Dr. Li will join Breakthrough Fuel as a Senior Data Scientist, Congratulations, January 2019
+                <br><br>- Yinglei Li successfully defended her Ph.D. dissertation, December 2018
+                <br><br>- Dr. Chung receives a research grant from MHI, February 2018
+                <br><br>- Dr. Chung receives research grants from Toyota Material Handling North America, January 2017
+                <br><a href = "http://www.prnewswire.com/news-releases/inaugural-toyota-material-handling-north-america-university-research-program-funds-top-research-proposals-300385924.html">[News: Inaugural Toyota Material Handling North America University Research Program Funds Top Research]</a>
+                <br><br>- Two master students, Ingyu Lee and Saraswathi Hathikal, join the CORE laboratory, January 2017
+                <br><br>- Dr. Chung receives a research grant from Laufer Group International, October 2016
+                <br><br>- Eman Banimustafa, a master student, joins the CORE laboratory, October 2016
+                <br><br>- Farouq Halawa, a Ph.D. student, joins the CORE laboratory, September 2016
+                <br><br>- Three master students, Yue Zhang, Rajat Dhiman, and Vinay Ghandi, join the CORE laboratory, September 2016
+                <br><br>- Dr. Chung receives a research grant from U.S. Department of Transportation, August 2016
+                <br><br>- Abel Portorreal, an undergraduate student, joins the CORE laboratory as a McNair scholar, May 2016
+                <br><br>- Namrata Shetty, a master student, joins the CORE laboratory, April 2016
+                <br><br>- The research team (Sara Kohtz, Prof. Chung, Yinglei Li, and Neha Sawant) receives the Best Track Paper Award at the ISERC 2016, April 2016
+                <br><br>- Yinglei Li receives the Best Student Paper Award at the ISERC 2016, April 2016
+                <br><br>- Professor Chung receives an Individual Development Award, January 2016
+                <br><br>- Sara Kohtz, an undergraduate student, joins the CORE laboratory, September 2015
+                <br><br>- Professor Chung receives a research grant from U.S. Department of Transportation through University Transportation Research Center (UTRC), April 2015
+                <br><br>- Yinglei Li receives a Sustainable Communities TAE Graduate Student Research Grant, March 2015
+                <br><br>- Professor Chung receives an Individual Development Award, January 2015
+                <br><br>- Yinglei Li, a Ph.D. student, joins the CORE laboratory, January 2015
+                </p>
+            <br>
+            <h1>Current Projects</h1>
+            <ul>
+                <li><a href = "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2032460&HistoricalAwards=false">Arc Routing Problems in Combined Drone/Truck Fleets, funded by NSF</a></li>
+                <li>Using drones to disinfect urban streets and protect the most vulnerable population from the spread of COVID-19, funded by SUNY RF</li>
+            </ul>
+            <br>
+            <h1>Completed Projects</h1>
+            <ul>
+                <li>Systematic and Integrated Framework for Advancing the Management of Dynamic, Complex, and Interdependent Systems, funded by Material Handling Institute</li>
+                <br><li>Investigating the Potential of Dynamic Wireless Charging Techniques for Continuous Electric Forklift Operations, funded by Toyota Material Handling North America</li>
+                <br><li>Studying Lift Truck Driver Behavior and Warehouse Congestion Using Informatics and Analytics Methods, funded by Toyota Material Handling North America</li>
+                <br><li>Re-Engineering of Operations at Laufer Group International, funded by Laufer Group International</li>
+                <br><li>Adaptive Vehicle Routing for Evacuation under Uncertainty, funded by U.S. Department of Transportation through UTRC</li>
+                <br><li>Warehouse Modeling, Operations Management, and Analytics, funded by Bennett Distribution Services</li>
+                <br><li>Disaster Relief Vehicle Routing under Uncertainty, funded by U.S. Department of Transportation through University Transportation Research Center (URTC)</li>
+                <br><li>Functional Job Analysis of Anticoagulation Clinic Staff, funded by New England Veterans Engineering Resource Center (VERC)</li>
+                <br><li>Research in RMA Process Setup, funded by Google</li>
+            </ul>
+            <br>
+            <h1>Sponsors</h1>
+            <p>
+                <a href="http://www.nsf.gov"> <img src="nsf.gif" alt="NSF"  height="105" /></a>
+                                <div align="center"><a href="http://www.google.com"> <img src="Googlelogo.png" alt="google"  height="70" /> </a>   &nbsp; &nbsp; &nbsp; <a href="http://www.newengland.va.gov/verc/"> <img src="VERC.jpg" alt="verc"  height="75" /> </a>
+                                &nbsp; &nbsp; &nbsp; <a href="http://www.utrc2.org"> <img src="utrc.png" alt="utrc"  height="90" /></a> &nbsp; &nbsp; &nbsp; <a href="https://www.rfsuny.org"><img src="sunylogo.png" alt="utrc"  height="100" /></a> <br>
+                                <a href="http://www.bennettdistributionservices.com/index.php"> <img src="bennett.png" alt="bennett"  height="60" /></a>
+                                <a href="http://www2.laufer.com"> <img src="laufer_logo.png" alt="laufer"  height="60" /></a>
+                                <a href="http://www.tmhna.com"> <img src="tmhna.png" alt="toyota"  height="60" /></a>
+                                <a href="http://www.mhi.org"> <img src="mhi.png" alt="MHI"  height="65" /></a>
         
-        if(obj1.y < this.y) {
-            obj1.y = this.y - obj1.h;
-            obj1.gravity = 0;
-            if (!keys[UP]){
-                obj1.yVel = 0;
-            }
-        } 
-        
-        else if (obj1.y>this.y){
-            obj1.y = this.y + this.h;
-            obj1.canJump = false;
-            obj1.yVel *= -1;
-        }
-    }
-    
-};
-
-var Coin = function(x, y, w, h){
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-};
-Coin.prototype.draw = function() {
-     pushMatrix();
-     translate(this.x+this.w/2, this.y+this.h/2);
-     noStroke();
-     fill(255, 255, 0);
-     ellipse(0, 0, this.w*sin(frameCount*3), this.h);
-     fill(255, 230, 0);
-     ellipse(0, 0, this.w*0.8*sin(frameCount*3), this.h*0.8);
-     popMatrix();
-};
-Coin.prototype.collide = function(obj){
-    this.y -= blockVel;
-    if (rrCol(this, obj)){
-        this.x = -1000;
-        score+=60;
-    }
-};
-
-//}
-
-/** Game setup **/
-//{
-var player = new Player();
-var blocks = [new Block(100, 370, 500, 50, true)];
-var coins = [];
-var gapPos = random(0, 500);
-//}
-
-/** Graphics **/
-//{
-var AnimatedBackground = function(){
-    image(BackgroundBase, 0, 0);
-    fill(255, 255, 97);
-        noStroke();
-    for (var i = 0;i<360;i+=30){
-        pushMatrix();
-        translate(80, 80);
-        rotate((i+frameCount/3)*0.0174533);
-        translate(-80, -73);
-        triangle(80, 5, 65, 30, 95, 30);
-        popMatrix();
-    }
-    fill(255, 244, 33);
-    arc(80, 80, 90, 90, -90, 90);
-    for (var i = 0;i<360;i+=30){
-        pushMatrix();
-        translate(80, 80);
-        rotate((i+frameCount/3)*0.0174533);
-        translate(-80, -73);
-        triangle(80, 5, 80, 30, 95, 30);
-        popMatrix();
-    }
-    for (var i = 0;i<clouds.length;i++){
-        cloud(clouds[i].x, clouds[i].y, clouds[i].s);
-        clouds[i].x -= clouds[i].speed;
-        if (clouds[i].x<-650){
-            clouds[i].x = 800;
-        }
-    }
-};
-var AnimatedBackground2 = function(){
-    image(BackgroundBase2, 0, 0);
-    fill(255, 255, 97);
-        noStroke();
-    for (var i = 0;i<360;i+=30){
-        pushMatrix();
-        translate(80, 80);
-        rotate((i+frameCount/3)*0.0174533);
-        translate(-80, -73);
-        triangle(80, 5, 65, 30, 95, 30);
-        popMatrix();
-    }
-    fill(255, 244, 33);
-    arc(80, 80, 90, 90, -90, 90);
-    for (var i = 0;i<360;i+=30){
-        pushMatrix();
-        translate(80, 80);
-        rotate((i+frameCount/3)*0.0174533);
-        translate(-80, -73);
-        triangle(80, 5, 80, 30, 95, 30);
-        popMatrix();
-    }
-    for (var i = 0;i<clouds.length;i++){
-        cloud(clouds[i].x, clouds[i].y, clouds[i].s);
-        clouds[i].x -= clouds[i].speed;
-        if (clouds[i].x<-650){
-            clouds[i].x = 800;
-        }
-    }
-};
-//}
-
-/** Main Scenes **/
-//{
-var game = (function() {
-    var gameTrans = 255;
-    var gameTriggered = false;
-    return function(){
-    if (blocks[blocks.length-1].y < 500){
-        blocks.push(new Block(0, 650, gapPos, 50, false));
-        blocks.push(new Block(gapPos+100, 650, 600-gapPos, 50, false));
-        if (floor(random(0, 5)) === 4){
-            coins.push(new Coin(random(0, 540), 600, 30, 30));
-        }
-        gapPos = random(0, 500);
-    }
-    
-    background(94, 52, 0);
-    pushMatrix();
-    translate(0, blocks[0].y-375);
-    AnimatedBackground();
-    image(Sign, 96, 301);
-    popMatrix();
-    player.draw();
-    player.moveX();
-    for (var i = blocks.length-1;i>=0;i--){
-        blocks[i].draw();
-        blocks[i].collideX(player);
-    }
-    player.moveY();
-    player.gravity = 0.3;
-    for (var i = blocks.length-1;i>=0;i--){
-        blocks[i].collideY(player);
-        if (blocks[i].y < -600){
-            blocks.splice(i, 1);
-        }
-    }
-    for (var i = coins.length-1;i>=0;i--){
-        coins[i].draw();
-        coins[i].collide(player);
-    }
-    blockVel+=0.001;
-    for (var i = 0;i<player.timer;i+=5){
-        fill(lerpColor(color(255, 0, 0), color(0, 255, 0), i/100));
-        rect(i+500, 0, 5, 30);
-    }
-    fill(0, 0, 0);
-    textSize(40);
-    textAlign(LEFT, CENTER);
-    text(floor(score), 10, 20);
-    score+=0.1;
-    fill(0, gameTrans);
-    rect(0, 0, 600, 600);
-    if (!gameTriggered){
-        gameTrans = lerp(gameTrans, 0, 0.1);
-    }
-    else {
-        gameTrans = lerp(gameTrans, 256, 0.1);
-    }
-    if (player.y < -30){
-        gameTriggered = true;
-    }
-    if (gameTrans > 255){
-        gameTriggered = false;
-        gameTrans = 255;
-        player = new Player();
-        blocks = [new Block(100, 370, 500, 50, true)];
-        coins = [];
-        gapPos = random(0, 500);
-        scene = "ded";
-        blockVel = 0;
-    }
-    };
-})();
-var logo = function(){
-    //its a me mario{
-        pushMatrix();
-        scale(1.5);
-        background(0, 163, 0);
-        fill(255, 255, 255);
-        textFont(createFont("Montserrat"), 50);
-        pushMatrix();
-        translate(200, lwPos);
-        rotate((lwPos-200)*2*0.0174533);
-        scale((lwPos/400+0.4));
-        text('DISSENSION', 0, 0);
-        popMatrix();
-        textSize(20);
-        text('studios', 200, lwPos2-80);
-        lwPos = s(lwPos, 200, 8);
-        stroke(255, 255, 255);
-        strokeWeight(3);
-        if (lwPos2 !== 500){
-            line(200-(lwPos2-500)/1.1, 170, 200+(lwPos2-500)/1.1, 170);
-            line(200-(lwPos2-500)/1.1, 235, 200+(lwPos2-500)/1.1, 235);
-        }
-        if (lwPos > 199.9){
-            lwPos2 = s(lwPos2, 340, 10);
-        }
-        if (lwPos2 < 340.01){
-            transparencies1 = lerp(transparencies1, 255, 0.1);
-        }
-        if (transparencies1 > 254){
-            scene = "menu";
-        }
-        fill(0, transparencies1);
-        noStroke();
-        rect(0, 0, 400, 400);
-        popMatrix();
-        
-    //}
-};
-var uded = (function(){
-    var udedpos = -300;
-    var transparencyded = 255;
-    var p2 = -300;
-    var dedTriggered = false;
-    var backBtn = new Button(300, 700, 200, 100, "back");
-    return function(){
-        AnimatedBackground2();
-        fill(0);
-        textFont(createFont("Montserrat"), 100);
-        text("you died", 300, udedpos);
-        textSize(50);
-        text("with a score of "+floor(score), p2, 300);
-        fill(0, transparencyded);
-        rect(0, 0, 600, 600);
-        if (!dedTriggered){
-            transparencyded = lerp(transparencyded, 0, 0.1);
-        }
-        else {
-            transparencyded = lerp(transparencyded, 256, 0.1);
-        }
-        if (transparencyded > 255){
-            udedpos = -300;
-            transparencyded = 255;
-            p2 = -300;
-            dedTriggered = false;
-            score = 0;
-            backBtn = new Button(300, 700, 200, 100, "back");
-            scene = "menu";
-        }
-        if (transparencyded < 1){
-            udedpos = lerp(udedpos, 100, 0.1);
-        }
-        if (udedpos > 99){
-            p2 = lerp(p2, 300, 0.1);
-        }
-        if (p2 > 299){
-            backBtn.y = lerp(backBtn.y, 500, 0.1);
-        }
-        backBtn.pack();
-        if (backBtn.triggered){
-            dedTriggered = true;
-        }
-    };
-})();
-var how = (function(){
-    var udedpos = -300;
-    var transparencyded = 255;
-    var p2 = -300;
-    var dedTriggered = false;
-    var backBtn = new Button(300, 700, 200, 100, "back");
-    return function(){
-        AnimatedBackground2();
-        fill(0);
-        textFont(createFont("Montserrat"), 90);
-        text("how to play", 300, udedpos);
-        textSize(30);
-        text("- move with arrow keys\n- don't be pushed to the top\n- press space to boost\n- collect coins", p2, 300);
-        fill(0, transparencyded);
-        rect(0, 0, 600, 600);
-        if (!dedTriggered){
-            transparencyded = lerp(transparencyded, 0, 0.1);
-        }
-        else {
-            transparencyded = lerp(transparencyded, 256, 0.1);
-        }
-        if (transparencyded > 255){
-            udedpos = -300;
-            transparencyded = 255;
-            p2 = -300;
-            dedTriggered = false;
-            score = 0;
-            backBtn = new Button(300, 700, 200, 100, "back");
-            scene = "menu";
-        }
-        if (transparencyded < 1){
-            udedpos = lerp(udedpos, 100, 0.1);
-        }
-        if (udedpos > 99){
-            p2 = lerp(p2, 300, 0.1);
-        }
-        if (p2 > 299){
-            backBtn.y = lerp(backBtn.y, 500, 0.1);
-        }
-        backBtn.pack();
-        if (backBtn.triggered){
-            dedTriggered = true;
-        }
-    };
-})();
-var menu = (function(){
-    var myText = new FallingText(300, 100, "falling", 150);
-    var playBtn = new Button(-300, 300, 200, 100, "play");
-    var howBtn = new Button(900, 425, 200, 100, "how");
-    var playTriggered = false;
-    var howTriggered = false;
-    var leadTriggered = false;
-    var transparencies = [0, 0, 0];
-    return function(){
-        AnimatedBackground2();
-        fill(0, transparencies2);
-        noStroke();
-        rect(0, 0, 600, 600);
-        transparencies2 = lerp(transparencies2, 0, 0.1);
-        fill(0);
-        textFont(createFont("Montserrat"), 100);
-        textAlign(CORNER, CORNER);
-        pushMatrix();
-        translate(0, 50);
-        myText.draw();
-        if (transparencies2 < 1){
-            myText.animate();
-        }
-        popMatrix();
-        
-        playBtn.draw();
-        playBtn.update();
-        playBtn.animate();
-        
-        howBtn.draw();
-        howBtn.update();
-        howBtn.animate();
-        
-        if (myText.done){
-            playBtn.x = lerp(playBtn.x, 300, 0.1);
-            howBtn.x = lerp(howBtn.x, 300, 0.1);
-        }
-        if (playBtn.triggered){
-            playTriggered = true;
-        }
-        if (howBtn.triggered){
-            howTriggered = true;
-        }
-        if (playTriggered){
-            transparencies[0] = lerp(transparencies[0], 255, 0.1);
-        }
-        if (howTriggered){
-            transparencies[1] = lerp(transparencies[1], 255, 0.1);
-        }
-        noStroke();
-        for (var i = 0;i<transparencies.length;i++){
-            fill(0, transparencies[i]);
-            rect(0, 0, 600, 600);
-        }
-        if (transparencies[0] > 254){
-            myText = new FallingText(300, 100, "falling", 150);
-            playBtn = new Button(-300, 300, 200, 100, "play");
-            howBtn = new Button(900, 425, 200, 100, "how");
-            playTriggered = false;
-            howTriggered = false;
-            leadTriggered = false;
-            transparencies = [0, 0, 0];
-            transparencies2 = 255;
-            scene = "game";
-        }
-        if (transparencies[1] > 254){
-            myText = new FallingText(300, 100, "falling", 150);
-            playBtn = new Button(-300, 300, 200, 100, "play");
-            howBtn = new Button(900, 425, 200, 100, "how");
-            playTriggered = false;
-            howTriggered = false;
-            leadTriggered = false;
-            transparencies = [0, 0, 0];
-            transparencies2 = 255;
-            scene = "how";
-        }
-    };
-})();
-var main = function() {
-    switch(scene){
-        case "logo":
-            logo();
-        break;
-        case "menu":
-            menu();
-        break;
-        case "game":
-            game();
-        break;
-        case "ded":
-            uded();
-        break;
-        case "how":
-            how();
-        break;
-    }
-    clicked = false;
-};
-//}
-
-/** Processing JS functions **/
-//{
-draw = function() {
-    main();
-};
-keyPressed = function(){
-    keys[keyCode] = true;
-};
-keyReleased = function(){
-    keys[keyCode] = false;
-};
-
-mouseClicked = function(){
-    clicked = true;
-};
-    }};
-
-    // Get the canvas that Processing-js will use
-    var canvas = document.getElementById("mycanvas"); 
-    // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
-    var processingInstance = new Processing(canvas, sketchProc); 
- </script>
-
+                                </div>
+                                   </p>
+                                   <br>
+            <h1>In the Media</h1>
+            <p>- The CORE lab's research is featured in BU Magazine, September 2019</p>
+            <div align = center><img src = "bu_mag.jpg" width = 50%></div>
+            <p> - The CORE research team's research is featured in ISE Magazine, July 2019</p>
+            <div align = center><img src = "iise.jpg" width = 50%></div>
+            <p><a href = "https://www.prnewswire.com/news-releases/inaugural-toyota-material-handling-north-america-university-research-program-funds-top-research-proposals-300385924.html">- The CORE lab is featured in PR Newswire.</a></p>
+            <br>
+            <p class = "updated">Last Updated June 2021</p>
+        </div>
+        <div class = "page">
+            <h2>Links</h2>
+            <p class = "h2">Dissertation Advice</p>
+            <p class = "maintext"><a href = "https://sites.bu.edu/manove/dissertation-advice/">Dissertation Advice for PhD students</a> - Michael Manove (This is written for Economics PhD students but it's still useful for students with other majors.)</p>
+            <p class = "h2">General Graduate School Survival Guide and Early Career Development</p>
+            <ul>
+                <li><a href = "http://www.cs.unc.edu/~azuma/hitch4.html">So long, and thanks for the Ph.D.! (Everything I wanted to know about CS graduate school at the beginning but didn't learn until later)</a> - Ronald T. Azuma</li>
+                <br>
+                <li><a href = "https://blogs.scientificamerican.com/guest-blog/the-awesomest-7-year-postdoc-or-how-i-learned-to-stop-worrying-and-love-the-tenure-track-faculty-life/">The Awesomest 7-Year Postdoc</a> - Radhika Nagpal</li>
+                <br>
+                <li>(BOOK) <a href = "https://www.amazon.com/PhD-Not-Enough-Survival-Science/dp/0465022227">A Ph.D. is Not Enough: A guide to Survival in Science</a> - Peter J. Feibelman (Highly recommended even for engineers)</li>
+                <br>
+                <li>(BOOK) <a href = "https://www.amazon.com/Mathematicians-Survival-Guide-Graduate-Development/dp/082183455X/">A Mathematician's Survival Guide: Graduate School and Early Career Development</a> - Steven G. Krantz</li>
+            </ul>
+            <br>
+            <p class = "h2">Guides for Scientific/Mathematical Writing</p>
+            <ul>
+                <li><a href = "http://www.docstyles.com/library/ascience.pdf">The Science of Scientific Writing</a> - George D. Gopen and Judith A. Swan</li>
+                <br>
+                <li>(PDF) <a href = "http://web.mit.edu/dimitrib/www/Ten_Rules.pdf">Ten Simple Rules for Mathematical Writing </a>- Dimitri Bertsekas</li>
+                <br>
+                <li><a href = "http://www.bartleby.com/141/">(LINK)</a> <a href = "http://www.amazon.com/Elements-Style-Fourth-Roger-Angell/dp/020530902X/">(BOOK)</a> The Elements of Style - William Strunk, Jr.</li>
+                <br>
+                <li>(BOOK) <a href = "http://www.amazon.com/Manual-Writers-Research-Dissertations-Edition/dp/0226816389/">A Manual for Writers of Research Papers, Theses, and Dissertations</a> - Turabian Et Al</li>
+                <br>
+                <li>(BOOK) <a href = "http://www.amazon.com/Primer-Mathematical-Writing-Disquisition-Appreciated/dp/0821806351/">A Primer of Mathematical Writing: Being a Disquisition on Having Your Ideas Recorded, Typeset, Published, Read & Appreciated</a> - Steven G. Krantz</li>
+            </ul>
+            <br>
+            <p class = "h2">Publishing</p>
+            <ul>
+                <li><a href = "http://www.springer.com/authors/journal+authors/journal+authors+academy?SGWID=0-1726414-12-837827-0">Cover Letters</a> - Springer Journal Author Academy</li>
+                <br>
+                <li><a href = "http://www.biosciencewriters.com/Writing-Cover-Letters-for-Scientific-Manuscripts.aspx">Writing Cover Letters for Scientific Manuscripts</a></li>
+                <br>
+                <li><a href = "http://www.nature.com/naturejobs/2010/101014/full/nj7317-873a.html">Publications: Publish Like a Pro</a> - Kendall Powell</li>
+            </ul>
+            <br>
+            <p class = "h2">Presentation Guide</p>
+            <ul>
+                <li><a href = "http://www.eng.unt.edu/ian/guides/speaker.html">Ian Parberry's Speaker's Guide</a> - Ian Parberry</li>
+                <br>
+                <li><a href = "http://www.ncsu.edu/project/posters/">Creating Effective Poster Presentations</a> - George R. Hess, Kathryn Tosney, and Leon H. Liegel</li>
+                <br>
+                <li><a href = "http://colinpurrington.com/tips/academic/posterdesign">Designing Conference Posters</a> - Colin Purrington</li>
+            </ul>
+            <br>
+            <p class = "h2">Teaching</p>
+            <ul>
+                <li><a href = "http://ocw.mit.edu/courses/chemistry/5-95j-teaching-college-level-science-and-engineering-spring-2009/video-discussions/">Teaching College-Level Science and Engineering</a> - Sanjoy Mahajan</li>
+            </ul>
+            <br>
+            <p class = "h2">Others</p>
+            <ul>
+                <li><a href = "http://www.psychologicalscience.org/observer/getArticle.cfm?id=2157">Twelve Tips for Reviewers</a> - Henry L. Roediger, III</li>
+                <br>
+                <li><a href = "http://matt.might.net/articles/books-papers-materials-for-graduate-students/">Reading for Graduate Students</a> - Matt Might</li>
+                <br>
+                <li><a href = "http://matt.might.net/articles/productivity-tips-hints-hacks-tricks-for-grad-students-academics">Productivity tips, tricks, and hacks for academics</a> - Matt Might</li>
+            </ul>
+            <br>
+            <p class = "updated">Last Updated July 2014</p>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
