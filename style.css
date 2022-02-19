@@ -1,0 +1,114 @@
+h1, h2 {
+    font-family: 'Josefin Sans';
+    text-align: center;
+    color: black;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+h2 {
+    font-size: 4em;
+}
+a {
+    text-decoration: none;
+}
+p {
+    color: black;
+    text-align: center;
+    font-family: 'Work Sans';
+    font-size: 1.3em;
+}
+.text {
+    color: black;
+    margin: 20px 20px 20px 20px;
+}
+body {
+    background-color : rgb(255, 255, 255);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+::-webkit-scrollbar { 
+    display: none;
+}
+.headline {
+    color: black;
+    font-family: 'Josefin Sans';
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+hr {
+    width: 50%;
+}
+nav {
+    background-color: rgb(236, 236, 236);
+    margin-left: -8px;
+    margin-top: -8px;
+    margin-right: -8px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.b {
+    font-family: "Josefin Sans";
+    text-decoration: none;
+    color: black;
+    float: right;
+}
+.b:hover {
+    color: rgb(0, 0, 150);
+}
+.material-icons {
+    font-size: 40px !important;
+    margin-left: 10px;
+}
+#last {
+    margin-right: 30px;
+}
+#asp {
+    font-size: 25px;
+    color: black;
+    margin-top: -20px;
+}
+.portrait {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#favicon {
+    width: 40px;
+    margin-left: 30px;
+    margin-bottom: 0px;
+}
+#favicon:hover {
+    cursor: pointer;
+}
+.h2 {
+    font-size: 30px;
+    margin-bottom: -10px;
+}
+.h3 {
+    font-size: 25px;
+}
+.updated {
+    font-size: 15px;
+}
+.maintext {
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 20px;
+}
+.pcp {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%
+}
+ul {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Work Sans';
+    margin-left: 20%;
+    margin-right: 20%;
+    list-style-position: inside;
+}
+.pub {
+    margin-bottom: 30px;
+}
