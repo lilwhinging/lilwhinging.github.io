@@ -113,3 +113,47 @@ ul {
 .pub {
     margin-bottom: 30px;
 }
+.listX {
+    background-color: rgb(220, 220, 220);
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: left;
+    font-size: 20px;
+}
+.listX2 {
+    background-color: rgb(220, 220, 220);
+    margin-left: 40%;
+    margin-right: 40%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: left;
+    font-size: 20px;
+}
+.listX3 {
+    background-color: rgb(220, 220, 220);
+    margin-left: 35%;
+    margin-right: 35%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: left;
+    font-size: 20px;
+}
+.listX4 {
+    background-color: rgb(220, 220, 220);
+    margin-left: 38%;
+    margin-right: 38%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: left;
+    font-size: 20px;
+}
