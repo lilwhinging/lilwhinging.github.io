@@ -21,8 +21,9 @@ body {
     margin-bottom: 40vh;
     margin-left: -8px;
     margin-right: -8px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.4);
     padding-bottom: 2px;
+    padding-top: 2px;
 }
 .bText {
     color:white;
@@ -117,6 +118,8 @@ header {
     color:white;
     transition: 0.6s all ease;
     cursor: pointer;
+    padding-top: -10px;
+    padding-left: -10px;
 }
 #menu:hover{
     transform: rotate(180deg);
