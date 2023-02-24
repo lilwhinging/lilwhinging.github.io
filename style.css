@@ -1,0 +1,123 @@
+
+body {
+    background-color: 	rgb(204, 105, 10);
+    background-size: 90%;
+    background-repeat: none;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+.head {
+    text-shadow: 2px 2px 8px rgb(255, 255, 255);
+    font-family: "Monoton";
+    font-size: 340%;
+    text-align:center;
+    color: White;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-delay: 2s;
+}
+
+.headline {
+    margin-bottom: 40vh;
+    margin-left: -8px;
+    margin-right: -8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-bottom: 2px;
+}
+.bText {
+    color:white;
+    margin-top: -50px;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 20px;
+}
+.main {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: "Open Sans";
+    margin-left: -8px;
+    margin-right: -8px;
+    margin-top:100px;
+    margin-bottom: -70px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: justify;
+    transform: translateX(-150px);
+    opacity: 0;
+    transition: 1s;
+}
+.main.active{
+    transform: translateX(0);
+    opacity: 1;
+}
+.main2 {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: "Open Sans";
+    margin-left: -8px;
+    margin-right: -8px;
+    margin-top:100px;
+    margin-bottom: -70px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: justify;
+    transform: translateX(150px);
+    opacity: 0;
+    transition: 1s;
+}
+.main2.active{
+    transform: translateX(0);
+    opacity: 1;
+}
+footer {
+    background-color: Black;
+    color: White;
+    transition: 0.3s;
+    margin-left: -8px;
+    margin-right: -8px;
+    padding-left: 30px;
+    margin-bottom: -9px;
+    margin-top: 100px;
+    padding-bottom:10px;
+}
+
+.fmaterial-icons {
+    font-size: 40px;
+    margin-left: 52px;
+    transition: 0.5s;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom:-10px;
+    cursor: pointer;
+    margin-top: 30px;
+    transform: rotate(0deg);
+}
+.fmaterial-icons:hover {
+    transform: rotate(30deg);
+    margin-right: 47/2px;
+    margin-left: 68.5;
+    color: rgba(20, 40, 255, 1);
+}           
+#foot {
+    text-align: center;
+    font-family: "Open Sans";
+    font-size: 30px;
+    margin-top: -30px;
+    padding-top: 10px;
+    margin-bottom: -30px;
+}
+header {
+    margin-bottom: 15vh;
+    margin-left: 20px;
+    margin-top: -20px;
+}
+#menu {
+    font-size:40px;
+    color:white;
+    transition: 0.6s all ease;
+    cursor: pointer;
+}
+#menu:hover{
+    transform: rotate(180deg);
+}
