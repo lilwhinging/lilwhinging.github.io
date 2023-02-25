@@ -21,6 +21,18 @@ function reveal2() {
         }
     }
 }
+function showMenu(){
+    var showMenu = document.querySelectorAll(".menu-item");
+    for (var i =0; i < showMenu.length; i++) {
+        showMenu[i].classList.add("active");
+    }
+}
+function hideMenu(){
+    var showMenu = document.querySelectorAll(".menu-item");
+    for (var i =0; i < showMenu.length; i++) {
+        showMenu[i].classList.remove("active");
+    }
+}
 window.addEventListener("scroll", reveal);
 reveal();
 window.addEventListener("scroll", reveal2);
