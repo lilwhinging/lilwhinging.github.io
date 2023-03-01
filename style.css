@@ -1,31 +1,24 @@
-
 body {
-    background-color: 	rgb(204, 105, 10);
-    background-size: 90%;
-    background-repeat: none;
-    background-attachment: fixed;
-    overflow-x: hidden;
+    background-color: rgb(131, 218, 242);
 }
 .head {
     text-shadow: 2px 2px 8px rgb(255, 255, 255);
     font-family: "Monoton";
     font-size: 340%;
-    text-align:center;
+    text-align: center;
     color: White;
     animation-name: example;
     animation-duration: 4s;
     animation-delay: 2s;
 }
-
 .headline {
     margin-bottom: 40vh;
     margin-left: -8px;
     margin-right: -8px;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding-bottom: 2px;
+    background-color: rgba(0, 0, 0, 0.4);
 }
-.bText {
-    color:white;
+.subText {
+    color: white;
     margin-top: -50px;
     text-align: center;
     font-family: "Montserrat";
@@ -36,19 +29,86 @@ body {
     font-family: "Open Sans";
     margin-left: -8px;
     margin-right: -8px;
-    margin-top:100px;
+    margin-top: 175px;
     margin-bottom: -70px;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
     text-align: justify;
-    transform: translateX(-150px);
+    transform: translateY(50px);
     opacity: 0;
     transition: 1s;
 }
 .main.active{
-    transform: translateX(0);
+    transform: translateY(0px);
+    opacity: 1;
+}
+.main2 {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: "Open Sans";
+    margin-left: -8px;
+    margin-right: -8px;
+    margin-top: 100px;
+    margin-bottom: -70px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: justify;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: 1s;
+}
+.main2.active{
+    transform: translateY(0);
+    opacity: 1;
+}
+footer {
+    background-color: Black;
+    color: White;
+    transition: 0.3s;
+    margin-left: -8px;
+    margin-right: -8px;
+    padding-left: 30px;
+    margin-bottom: -9px;
+    margin-top: 100px;
+    padding-bottom: 10px;
+}
+.fmaterial-icons {
+    font-size: 40px;
+    margin-left: 52px;
+    transition: 0.5s;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: -10px;
+    cursor: pointer;
+    margin-top: 30px;
+    transform: rotate(0deg);
+}
+.fmaterial-icons:hover {
+    transform: rotate(30deg);
+    margin-right: 23.5px;
+    margin-left: 68.5;
+    color: rgba(20, 40, 255, 1);
+}           
+.main {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: "Open Sans";
+    margin-left: -8px;
+    margin-right: -8px;
+    margin-top: 175px;
+    margin-bottom: -70px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: justify;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: 1s;
+}
+.main.active{
+    transform: translateY(0px);
     opacity: 1;
 }
 .main2 {
@@ -82,7 +142,6 @@ footer {
     margin-top: 100px;
     padding-bottom:10px;
 }
-
 .fmaterial-icons {
     font-size: 40px;
     margin-left: 52px;
@@ -95,13 +154,14 @@ footer {
 }
 .fmaterial-icons:hover {
     transform: rotate(30deg);
-    margin-right: 47/2px;
+    margin-right: 23.5px;
     margin-left: 68.5;
     color: rgba(20, 40, 255, 1);
 }           
 #foot {
     text-align: center;
-    font-family: "Open Sans";
+    font-family: "Monoton";
+    color: White;
     font-size: 30px;
     margin-top: -30px;
     padding-top: 10px;
@@ -113,11 +173,48 @@ header {
     margin-top: -20px;
 }
 #menu {
-    font-size:40px;
-    color:white;
+    background-color: rgba(0, 0, 0);
+    font-size: 40px;
+    color: white;
+    opacity: 0.4;
+    transition: 0.6s all ease;
+    cursor: pointer;
+    margin-top: 12px;
+    margin-left: -108px;
+    padding-top: 20px;
+    padding-left: 100px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+}
+#menu:hover{
+    opacity: 0.6;
+}
+#menu.active{
+    transform: translateX(80px);
+}
+.menu-bar{
+    list-style-type: none;
+    margin-left: -28px;
+    margin-top: -40px;
+    padding-left: 0px;
+    width: 80px;
+    color: white;
+}
+.menu-item{
+    display: block;
+    background-color: rgba(0, 0, 0);
+    opacity: 0.4;
+    font-family: "Open Sans";
+    font-size: 30px;
+    margin-left: -80px;
+    padding: 3px;
+    transform: translateX(-80px);
     transition: 0.6s all ease;
     cursor: pointer;
 }
-#menu:hover{
-    transform: rotate(180deg);
+.menu-item.active{
+    transform: translateX(80px);
+}
+.menu-item:hover{
+    opacity: 0.6;
 }
