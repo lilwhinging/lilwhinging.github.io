@@ -1,10 +1,15 @@
 body {
-    background-color: rgb(131, 218, 242);
+    background-color: #C49E78;
+    background-image: url("https://theawesomedaily.com/wp-content/uploads/2016/02/nqGi0DG.jpg");
+    background-size: 100%;
+    background-repeat: none;
+    background-attachment: fixed;
+    overflow-x: hidden;
 }
 .head {
     text-shadow: 2px 2px 8px rgb(255, 255, 255);
     font-family: "Monoton";
-    font-size: 340%;
+    font-size: 300%;
     text-align: center;
     color: White;
     animation-name: example;
@@ -16,6 +21,7 @@ body {
     margin-left: -8px;
     margin-right: -8px;
     background-color: rgba(0, 0, 0, 0.4);
+    padding-bottom: 1px;
 }
 .subText {
     color: white;
@@ -24,60 +30,20 @@ body {
     font-family: "Montserrat";
     font-size: 20px;
 }
-.main {
-    background-color: rgba(255, 255, 255, 0.8);
-    font-family: "Open Sans";
-    margin-left: -8px;
-    margin-right: -8px;
-    margin-top: 175px;
-    margin-bottom: -70px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: justify;
-    transform: translateY(50px);
-    opacity: 0;
-    transition: 1s;
-}
-.main.active{
-    transform: translateY(0px);
-    opacity: 1;
-}
-.main2 {
-    background-color: rgba(255, 255, 255, 0.8);
-    font-family: "Open Sans";
-    margin-left: -8px;
-    margin-right: -8px;
-    margin-top: 100px;
-    margin-bottom: -70px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: justify;
-    transform: translateY(50px);
-    opacity: 0;
-    transition: 1s;
-}
-.main2.active{
-    transform: translateY(0);
-    opacity: 1;
-}
 footer {
     background-color: Black;
     color: White;
     transition: 0.3s;
     margin-left: -8px;
     margin-right: -8px;
-    padding-left: 30px;
+    padding-left: -100px;
     margin-bottom: -9px;
     margin-top: 100px;
     padding-bottom: 10px;
 }
 .fmaterial-icons {
     font-size: 40px;
-    margin-left: 52px;
+    margin-left: 15%;
     transition: 0.5s;
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: -10px;
@@ -96,19 +62,19 @@ footer {
     font-family: "Open Sans";
     margin-left: -8px;
     margin-right: -8px;
-    margin-top: 175px;
+    margin-top: 100px;
     margin-bottom: -70px;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
     text-align: justify;
-    transform: translateY(50px);
+    transform: translateX(-150px);
     opacity: 0;
     transition: 1s;
 }
 .main.active{
-    transform: translateY(0px);
+    transform: translateX(0px);
     opacity: 1;
 }
 .main2 {
@@ -116,7 +82,7 @@ footer {
     font-family: "Open Sans";
     margin-left: -8px;
     margin-right: -8px;
-    margin-top:100px;
+    margin-top: 100px;
     margin-bottom: -70px;
     padding-left: 30px;
     padding-right: 30px;
@@ -141,23 +107,7 @@ footer {
     margin-bottom: -9px;
     margin-top: 100px;
     padding-bottom:10px;
-}
-.fmaterial-icons {
-    font-size: 40px;
-    margin-left: 52px;
-    transition: 0.5s;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom:-10px;
-    cursor: pointer;
-    margin-top: 30px;
-    transform: rotate(0deg);
-}
-.fmaterial-icons:hover {
-    transform: rotate(30deg);
-    margin-right: 23.5px;
-    margin-left: 68.5;
-    color: rgba(20, 40, 255, 1);
-}           
+}         
 #foot {
     text-align: center;
     font-family: "Monoton";
@@ -168,29 +118,27 @@ footer {
     margin-bottom: -30px;
 }
 header {
-    margin-bottom: 15vh;
+    margin-bottom: -10vh;
     margin-left: 20px;
     margin-top: -20px;
 }
 #menu {
-    background-color: rgba(0, 0, 0);
+    background-color: rgba(0, 0, 10);
+    background-attachment: fixed;
     font-size: 40px;
     color: white;
     opacity: 0.4;
     transition: 0.6s all ease;
     cursor: pointer;
     margin-top: 12px;
-    margin-left: -108px;
+    margin-left: -28px;
     padding-top: 20px;
-    padding-left: 100px;
+    padding-left: 20px;
     padding-bottom: 20px;
-    padding-right: 20px;
+    padding-right:20px;
 }
 #menu:hover{
     opacity: 0.6;
-}
-#menu.active{
-    transform: translateX(80px);
 }
 .menu-bar{
     list-style-type: none;
@@ -206,14 +154,12 @@ header {
     opacity: 0.4;
     font-family: "Open Sans";
     font-size: 30px;
-    margin-left: -80px;
     padding: 3px;
     transform: translateX(-80px);
     transition: 0.6s all ease;
-    cursor: pointer;
 }
 .menu-item.active{
-    transform: translateX(80px);
+    transform: translateX(0px);
 }
 .menu-item:hover{
     opacity: 0.6;
