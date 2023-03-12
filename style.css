@@ -1,4 +1,5 @@
 body {
+    background-color: #C49E78;
     background-image: url("https://theawesomedaily.com/wp-content/uploads/2016/02/nqGi0DG.jpg");
     background-size: 100%;
     background-repeat: none;
@@ -124,7 +125,7 @@ header {
 #menu {
     background-color: rgba(0, 0, 10);
     background-attachment: fixed;
-    font-size: 40px;
+    font-size: 12vh;
     color: white;
     opacity: 0.4;
     transition: 0.6s all ease;
@@ -135,31 +136,40 @@ header {
     padding-left: 20px;
     padding-bottom: 20px;
     padding-right:20px;
+    margin-bottom: 0px;
 }
 #menu:hover{
     opacity: 0.6;
 }
-.menu-bar{
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+#menu-bar{
     list-style-type: none;
+    margin-top: 0px;
+    background-color:rgba(0, 0, 0, 0.4);
     margin-left: -28px;
-    margin-top: -40px;
-    padding-left: 0px;
+    padding-left:10px;
+    padding-right: 30px;
     width: 80px;
-    color: white;
+    transform: translate(-130px);
+    transition: 1s all ease;
+}
+#menu-bar.active {
+    transform: translate(0px);
+    transition: 1s all ease;
 }
 .menu-item{
+    cursor: pointer;
     display: block;
-    background-color: rgba(0, 0, 0);
-    opacity: 0.4;
+    opacity: 0.8;
+    color: white !important;
     font-family: "Open Sans";
     font-size: 30px;
-    padding: 3px;
-    transform: translateX(-80px);
     transition: 0.6s all ease;
-}
-.menu-item.active{
-    transform: translateX(0px);
+    text-decoration: none !important;
 }
 .menu-item:hover{
-    opacity: 0.6;
+    opacity: 1;
+    color: rgb(23, 120, 230) !important;
 }
