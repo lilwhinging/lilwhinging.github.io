@@ -1,7 +1,7 @@
 body {
-    background-color: #C49E78;
+    background-color: White;
     background-image: url("bkgd.jpeg");
-    background-size: 100%;
+    background-size: 110%;
     background-repeat: none;
     background-attachment: fixed;
     overflow-x: hidden;
@@ -165,7 +165,7 @@ a:link, a:visited, a:hover, a:active {
     opacity: 0.8;
     color: white !important;
     font-family: "Open Sans";
-    font-size: 30px;
+    font-size: 10vh;
     transition: 0.6s all ease;
     text-decoration: none !important;
 }
