@@ -1,8 +1,6 @@
 body {
-    background-color: Black;
     background-image: url("bkgd.jpeg");
     background-size: 110%;
-    background-blend-mode: multiply;
     background-repeat: none;
     background-attachment: fixed;
     overflow-x: hidden;
