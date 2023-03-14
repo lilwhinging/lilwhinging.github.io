@@ -149,7 +149,7 @@ a:link, a:visited, a:hover, a:active {
     background-color:rgba(0, 0, 0, 0.4);
     margin-left: -28px;
     padding-left:10px;
-    width: 15vh;
+    width: 10vh;
     padding-right: 30px;
     transform: translate(-20vh);
     transition: 1s all ease;
@@ -164,7 +164,7 @@ a:link, a:visited, a:hover, a:active {
     opacity: 0.8;
     color: white !important;
     font-family: "Open Sans";
-    font-size: 5vh;
+    font-size: 3vh;
     transition: 0.6s all ease;
     text-decoration: none !important;
 }
