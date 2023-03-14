@@ -151,9 +151,9 @@ a:link, a:visited, a:hover, a:active {
     background-color:rgba(0, 0, 0, 0.4);
     margin-left: -28px;
     padding-left:10px;
-    width: 12vh;
+    width: 15vh;
     padding-right: 30px;
-    transform: translate(-130px);
+    transform: translate(-20vh);
     transition: 1s all ease;
 }
 #menu-bar.active {
