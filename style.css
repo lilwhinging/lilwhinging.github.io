@@ -133,7 +133,7 @@ a:link, a:visited, a:hover, a:active {
     padding-left:10px;
     width: 15vh;
     padding-right: 30px;
-    transform: translate(-20vh);
+    transform: translate(-22vh);
     transition: 1s all ease;
 }
 #menu-bar.active {
