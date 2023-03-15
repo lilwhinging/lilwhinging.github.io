@@ -163,7 +163,7 @@ h2 {
 }
 audio {
     text-align: center;
-    margin-left: 50%;
+    margin-left: auto;
     margin-bottom: 30px;
 }
 hr {
