@@ -178,7 +178,7 @@ a:link, a:visited, a:hover, a:active {
 h2 {
     margin-top: 20px;
     color: White;
-    font-size: 80px;
+    font-size: 70px;
     font-family: 'Playfair Display';
     text-align: center;
 }
@@ -193,7 +193,7 @@ hr {
 .ex {
     text-align: center;
     font-family: "Playfair Display";
-    font-size: 20px;
+    font-size: 40px;
     color: white;
 }
 iframe {
